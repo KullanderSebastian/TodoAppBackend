@@ -25,8 +25,6 @@ SECRET_KEY = 'django-insecure-4iy-r)zfs$int98^n51mw3rhh@889+ak(_z(+kaj0dbf7&4m-$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -39,11 +37,22 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 	'rest_framework',
 	'todos',
+	'corsheaders',
+	'rest_framework.authtoken',
+	'rest_framework_simplejwt',
 ]
 
 REST_FRAMEWORK = {
 	'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-	'PAGE_SIZE': 10
+	'PAGE_SIZE': 10,
+	'DEFAULT_PERMISSION_CLASSES': (
+		'rest_framework.permissions.IsAuthenticated',
+	),
+	'DEFUALT_AUTHENTICATION_CLASSES': (
+		'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+       	'rest_framework_simplejwt.authentication.JWTAuthentication',
+	),
 }
 
 MIDDLEWARE = [
@@ -54,7 +63,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	'corsheaders.middleware.CorsMiddleware',
 ]
+
+ALLOWED_HOSTS=['*']
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'todoApp.urls'
 

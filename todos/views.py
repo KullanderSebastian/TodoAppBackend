@@ -11,8 +11,7 @@ from rest_framework import renderers
 class TaskViewSet(viewsets.ModelViewSet):
 	queryset = Task.objects.all()
 	serializer_class = TaskSerializer
-	permission_classes = [permissions.IsAuthenticatedOrReadOnly,
-							IsOwnerOrReadOnly]
+	permission_classes = [IsOwnerOrReadOnly]
 
 	@action(detail=True, renderer_classes=[renderers.StaticHTMLRenderer])
 	def perform_create(self, serializer):
