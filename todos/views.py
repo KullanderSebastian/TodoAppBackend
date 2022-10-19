@@ -17,9 +17,18 @@ class TaskViewSet(viewsets.ModelViewSet):
 	def perform_create(self, serializer):
 		serializer.save(owner=self.request.user)
 
+	def get_queryset(self):
+		user = self.request.user
+		return Task.objects.filter(owner=user)
+
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
 	queryset = User.objects.all()
 	serializer_class = UserSerializer
+
+class UserCreate(generics.CreateAPIView): 
+	queryset = User.objects.all()
+	serializer_class = UserSerializer
+	permission_classes = [permissions.AllowAny]
 
 @api_view(["GET"])
 def api_root(request, format=None):

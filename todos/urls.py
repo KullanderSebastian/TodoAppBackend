@@ -8,4 +8,5 @@ router.register(r"users", views.UserViewSet, basename="user")
 
 urlpatterns = [
 	path("", include(router.urls)),
+	path("account/register/", views.UserCreate.as_view()),
 ]
