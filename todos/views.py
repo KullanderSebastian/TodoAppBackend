@@ -19,6 +19,9 @@ class TaskViewSet(viewsets.ModelViewSet):
 
 	def get_queryset(self):
 		user = self.request.user
+		if self.request.user.is_anonymous:
+			return Task.objects.all()
+
 		return Task.objects.filter(owner=user)
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
